@@ -20,7 +20,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `commands/multi_perspective_review.md` - 複数視点からの客観的レビューと妥当性検証
 
 ### スキル構成
-- `skills/ask-user-choice/SKILL.md` - ユーザーに質問する際に選択式で答えやすくするスキル（自動発動）
 - `skills/assembling-dev-team/SKILL.md` - 「開発チーム集合」「チームで実装」等の言及時に使用。プランファイルに基づいて実装・リリース・レビュー・プラン更新の4担当をスポーンし、ステップごとにサイクルを回すスキル（自動発動）
 - `skills/codex-review/SKILL.md` - Codex CLIを使った客観的コードレビュー（planファイルと開発日誌を参照、レビュー結果をタスクリスト化、指摘が収束するまで繰り返す、自動発動）
 - `skills/codex-plan-review/SKILL.md` - Codex CLIを使ったplanファイルレビュー（実現可能性・妥当性を評価し、レビュー結果をタスクリスト化、指摘が収束するまで繰り返す、自動発動）
@@ -109,7 +108,6 @@ claude plugin validate .
 
 **実験対象**:
 - `skills/semantic-committing/SKILL.md` - スキル
-- `skills/ask-user-choice/SKILL.md` - スキル
 - `commands/multi_perspective_review.md` - コマンド
 
 Claude AIのシステムプロンプトおよび公式ドキュメントでは、XMLタグによるプロンプト構造化が推奨されています。このリポジトリでは、上記ファイルでXMLタグ化を試験的に導入しています。
