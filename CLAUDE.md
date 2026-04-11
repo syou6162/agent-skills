@@ -78,11 +78,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 claude plugin validate .
 
 # GitHubリポジトリからインストール
-/plugin marketplace add syou6162/claude-code-commands
-/plugin install syou6162-plugin@syou6162-marketplace
+/plugin marketplace add syou6162/agent-skills
+/plugin install syou6162-agent-skills@syou6162-marketplace
 
 # コマンドの呼び出しテスト
-/syou6162-plugin:command-name
+/syou6162-agent-skills:command-name
 ```
 
 ## 重要な設計原則
