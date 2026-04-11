@@ -1,16 +1,16 @@
 {
   "name": "syou6162-marketplace",
   "metadata": {
-    "description": "Yasuhisa Yoshida's personal marketplace for Claude Code custom slash commands"
+    "description": "Yasuhisa Yoshida's personal marketplace for Claude Code agent skills"
   },
   "owner": {
     "name": "Yasuhisa Yoshida"
   },
   "plugins": [
     {
-      "name": "syou6162-plugin",
+      "name": "syou6162-agent-skills",
       "source": "./",
-      "description": "Yasuhisa Yoshida's personal custom slash commands for Claude Code"
+      "description": "Yasuhisa Yoshida's personal agent skills, commands, and sub-agents for Claude Code"
     }
   ]
 }
