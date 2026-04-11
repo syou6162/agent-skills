@@ -1,9 +1,7 @@
 ---
 name: updating-pr-title-and-description
 description: Pull Request作成・更新時に使用。タイトルと説明文を自動生成・更新する。
-allowed-tools: Bash, Write, Edit, Read
-model: opus
-context: fork
+compatibility: Requires gh (GitHub CLI) and git
 ---
 
 # Pull Requestのタイトルと説明文を更新する
