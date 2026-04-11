@@ -1,9 +1,7 @@
 ---
 name: semantic-committing
 description: コミット時、「commit」「git add」「変更を分割」の言及時に使用。git diffを分析し、変更を論理的な意味単位に分割してコミットする。git-sequential-stageでhunk単位のステージングを行う。
-allowed-tools: Bash, Write, Edit, Read
-model: sonnet
-context: fork
+compatibility: Requires git and git-sequential-stage (https://github.com/syou6162/git-sequential-stage)
 ---
 
 # 意味のある最小単位でコミットする
