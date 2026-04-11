@@ -1,7 +1,7 @@
 ---
 name: reading-notion
 description: Notion URLが会話に登場した時、またはNotionのコンテンツを検索・取得する必要がある時に使用してください。
-allowed-tools: Bash, Read
+compatibility: Requires notion-to-md and a valid Notion API token (NOTION_TOKEN environment variable); search mode additionally requires Node.js (npx), mcptools, @notionhq/notion-mcp-server, and jq
 ---
 
 # Reading Notion
