@@ -34,7 +34,7 @@ mkdir -p .claude_work/notion && notion-to-md {notion_url} | tee .claude_work/not
 **説明**:
 - `{notion_url}`: ユーザーが提示したNotion URL（例: `https://www.notion.so/workspace/Page-title-abc123...`）
 - `{page_id}`: URLの最後の32文字（例: `abc123def456ghi789jkl012mno34567`）
-- `tee`を使うことで許可なしでファイル保存が可能
+- `tee`で標準出力とファイル保存を両立できる
 
 ### 2. Markdownファイルの読み込みと要約報告
 

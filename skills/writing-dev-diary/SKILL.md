@@ -1,9 +1,7 @@
 ---
 name: writing-dev-diary
 description: 「開発日誌更新」「開発日誌作って」の言及時に使用。esa-llm-scoped-guardで開発日誌を新規作成・更新します。
-allowed-tools: Bash, Write, Edit, Read
-model: sonnet
-context: fork
+compatibility: Requires esa-llm-scoped-guard and gh (GitHub CLI)
 ---
 
 # esa開発日誌の作成・更新
@@ -16,7 +14,7 @@ esaに開発日誌を投稿・更新するスキルです。`esa-llm-scoped-guar
 
 - YAMLファイルは必ず`.claude_work/dev_diary.yaml`に作成すること（**ファイル名固定**）
 - esa MCPのツール（`create_esa_post`, `update_esa_post`, `read_esa_post`, `read_esa_multiple_posts`, `search_esa_posts`）は使用禁止。既存記事の取得には必ず `esa-llm-scoped-guard fetch` コマンドを使用すること
-- **サブエージェントへの指示**: Plan modeで一般目的サブエージェントやExploreエージェントを起動して開発日誌を確認させる場合、必ず `esa-llm-scoped-guard fetch` で取得した `.claude_work/dev_diary.yaml` を参照するよう指示すること。esa MCPツールで直接取得させてはいけない
+- **サブエージェントへの指示**: Plan modeでサブエージェントや探索用エージェントを起動して開発日誌を確認させる場合、必ず `esa-llm-scoped-guard fetch` で取得した `.claude_work/dev_diary.yaml` を参照するよう指示すること。esa MCPツールで直接取得させてはいけない
 - YAMLスキーマは必ず`esa-llm-scoped-guard -help`で確認してから生成すること
 - **Planモードでも投稿可能**: `.claude_work/` は `.gitignore` の対象であり、リポジトリの変更にならないため、Planモードでも書き込みが許可されている。`esa-llm-scoped-guard` コマンドの実行も同様。「Planモードだからできない」と拒否してはいけない
 
@@ -106,7 +104,7 @@ esa-llm-scoped-guard -help
 
 #### パターンC: 「開発日誌を更新」（URLなし）の場合
 
-1. **AskUserQuestionツール**を使用して、ユーザーに開発日誌のURLを確認：
+1. ユーザーに質問して、開発日誌のURLを確認：
    - 質問: 「更新する開発日誌のURLを教えてください」
    - 選択肢:
      - 「URLを提供する」→ ユーザーからURL入力を受け取る
