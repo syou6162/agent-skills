@@ -1,7 +1,7 @@
 {
   "name": "syou6162-agent-skills",
   "version": "1.0.0",
-  "description": "Yasuhisa Yoshida's personal agent skills, commands, and sub-agents for Claude Code",
+  "description": "Yasuhisa Yoshida's personal agent skills for Claude Code",
   "author": {
     "name": "Yasuhisa Yoshida"
   },
