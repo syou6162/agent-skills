@@ -97,7 +97,7 @@ Bash経由で`copilot --model gpt-5.3-codex`を使ってレビューを実行し
 
 **重要**:
 - コマンドはリポジトリルートで実行すること（相対パスが前提）
-- **プロンプトは必ず `.claude_work/review_prompt.md` に書き出してから `cat` でパイプすること**。`echo "..."` でインライン展開すると、Claude Code が改行 + `#` を誤検知して毎回確認プロンプトを出すため（[claude-code#45008](https://github.com/anthropics/claude-code/issues/45008)）
+- **プロンプトは必ず `.claude_work/review_prompt.md` に書き出してから `cat` でパイプすること**（`echo` でインライン展開しない）
 
 <example>
 
