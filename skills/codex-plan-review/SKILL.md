@@ -97,14 +97,15 @@ Bash経由で`copilot --model gpt-5.3-codex`を使ってレビューを実行し
 
 **重要**:
 - コマンドはリポジトリルートで実行すること（相対パスが前提）
-- **プロンプトは必ず `.claude_work/review_prompt.md` に書き出してから `cat` でパイプすること**（`echo` でインライン展開しない）
+- **プロンプトは必ず `Write`ツールで `.claude_work/review_prompt.md` に書き出してから `cat` でパイプすること**
 
 <example>
 
-**開発日誌がない場合のコマンド例：**
+**開発日誌がない場合の例：**
 
-```bash
-cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
+1. `Write`ツールで `.claude_work/review_prompt.md` を作成：
+
+```markdown
 以下のplanファイルを日本語でレビューしてください。
 
 ## レビュー対象
@@ -144,14 +145,19 @@ cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
 - ユーザーが明示的に述べた要件や制約が漏れていないか
 
 出力は日本語で、具体的な指摘と改善提案を含めてください。
-REVIEW_EOF
+```
+
+2. Bashで実行：
+
+```bash
 cat .claude_work/review_prompt.md | copilot --model gpt-5.3-codex
 ```
 
-**開発日誌がある場合のコマンド例：**
+**開発日誌がある場合の例：**
 
-```bash
-cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
+1. `Write`ツールで `.claude_work/review_prompt.md` を作成：
+
+```markdown
 以下のplanファイルを日本語でレビューしてください。
 
 ## レビュー対象
@@ -196,7 +202,11 @@ cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
 - ユーザーが明示的に述べた要件や制約が漏れていないか
 
 出力は日本語で、具体的な指摘と改善提案を含めてください。
-REVIEW_EOF
+```
+
+2. Bashで実行：
+
+```bash
 cat .claude_work/review_prompt.md | copilot --model gpt-5.3-codex
 ```
 
@@ -213,7 +223,7 @@ cat .claude_work/review_prompt.md | codex review -
 <important>
 
 - ファイルの内容ではなく、ファイルパスを渡すことで、Codexが直接ファイルを読み取ります
-- **プロンプトは必ず `.claude_work/review_prompt.md` にファイルとして書き出すこと**（`echo` でインライン展開しない）
+- **プロンプトは必ず `Write`ツールで `.claude_work/review_prompt.md` にファイルとして書き出すこと**
 - **毎回新規セッションでレビューすること**（`resume`は使用禁止）
 - **Codexは**過去のレビュー結果や前回の指摘には一切言及しないこと
 - **Codexは**プロンプトに記載された観点のみでレビューすること（「前回の指摘は直りましたか？」などの余計な質問をしない）

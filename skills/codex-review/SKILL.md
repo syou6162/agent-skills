@@ -85,14 +85,15 @@ Bash経由で`copilot --model gpt-5.3-codex`を使ってレビューを実行し
 
 **重要**:
 - コマンドはリポジトリルートで実行すること（相対パスが前提）
-- **プロンプトは必ず `.claude_work/review_prompt.md` に書き出してから `cat` でパイプすること**（`echo` でインライン展開しない）
+- **プロンプトは必ず `Write`ツールで `.claude_work/review_prompt.md` に書き出してから `cat` でパイプすること**
 
 <example>
 
-**開発日誌がない場合のコマンド例：**
+**開発日誌がない場合の例：**
 
-```bash
-cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
+1. `Write`ツールで `.claude_work/review_prompt.md` を作成：
+
+```markdown
 <デフォルトブランチ名>ブランチとの差分を日本語でレビューしてください。
 
 以下のファイルを参照して、計画に沿った実装になっているか確認してください：
@@ -111,14 +112,19 @@ cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
 - コードの品質（可読性、保守性）
 - 潜在的な問題やバグ
 - ユーザー意図との整合性: .claude_work/user_prompts.txt に記録されたユーザーの発言・指示と実装が整合しているか
-REVIEW_EOF
+```
+
+2. Bashで実行：
+
+```bash
 cat .claude_work/review_prompt.md | copilot --model gpt-5.3-codex
 ```
 
-**開発日誌がある場合のコマンド例：**
+**開発日誌がある場合の例：**
 
-```bash
-cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
+1. `Write`ツールで `.claude_work/review_prompt.md` を作成：
+
+```markdown
 <デフォルトブランチ名>ブランチとの差分を日本語でレビューしてください。
 
 以下のファイルを参照して、計画に沿った実装になっているか確認してください：
@@ -139,7 +145,11 @@ cat <<'REVIEW_EOF' > .claude_work/review_prompt.md
 - 潜在的な問題やバグ
 - 開発日誌に記載された開発指針との整合性
 - ユーザー意図との整合性: .claude_work/user_prompts.txt に記録されたユーザーの発言・指示と実装が整合しているか
-REVIEW_EOF
+```
+
+2. Bashで実行：
+
+```bash
 cat .claude_work/review_prompt.md | copilot --model gpt-5.3-codex
 ```
 
@@ -156,7 +166,7 @@ cat .claude_work/review_prompt.md | codex review -
 <important>
 
 - ファイルの内容ではなく、ファイルパスを渡すことで、Codexが直接ファイルを読み取ります
-- **プロンプトは必ず `.claude_work/review_prompt.md` にファイルとして書き出すこと**（`echo` でインライン展開しない）
+- **プロンプトは必ず `Write`ツールで `.claude_work/review_prompt.md` にファイルとして書き出すこと**（Bashの`echo`でインライン展開しない）
 - **毎回新規セッションでレビューすること**（`resume`は使用禁止）
 - **Codexは**過去のレビュー結果や前回の指摘には一切言及しないこと
 - **Codexは**プロンプトに記載された観点のみでレビューすること（「前回の指摘は直りましたか？」などの余計な質問をしない）
