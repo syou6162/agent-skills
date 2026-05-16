@@ -166,7 +166,7 @@ cat .claude_work/review_prompt.md | codex review -
 <important>
 
 - ファイルの内容ではなく、ファイルパスを渡すことで、Codexが直接ファイルを読み取ります
-- **プロンプトは必ず `Write`ツールで `.claude_work/review_prompt.md` にファイルとして書き出すこと**（Bashの`echo`でインライン展開しない）
+- **プロンプトは必ず `Write`ツールで `.claude_work/review_prompt.md` にファイルとして書き出すこと**
 - **毎回新規セッションでレビューすること**（`resume`は使用禁止）
 - **Codexは**過去のレビュー結果や前回の指摘には一切言及しないこと
 - **Codexは**プロンプトに記載された観点のみでレビューすること（「前回の指摘は直りましたか？」などの余計な質問をしない）
