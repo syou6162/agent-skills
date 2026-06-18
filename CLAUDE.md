@@ -106,7 +106,7 @@ Claudeのシステムプロンプトおよび公式ドキュメントでは、XM
 スキルごとに以下のツールを使用：
 - **GitHub CLI (`gh`)** - Pull Request操作・GitHub URL状態確認（updating-pr-title-and-description, writing-dev-diary, orchestrating-cursor-cloud-agent）
 - **Cursor Cloud Agent API (`https://api.cursor.com/v1`)** - エージェント作成・追加プロンプト・ステータスポーリング（orchestrating-cursor-cloud-agent スキル）
-- **curl** - Cursor Cloud Agent API 呼び出し（orchestrating-cursor-cloud-agent スキル）
+- **cursor-agent-cli (`https://github.com/syou6162/cursor-agent-cli`)** - Cursor Cloud Agent API 呼び出し（orchestrating-cursor-cloud-agent スキル）
 - **Linear MCP server (`https://mcp.linear.app/mcp`)** - Linear issue の紐付け・ステータス更新（orchestrating-cursor-cloud-agent スキル）
 - **git-sequential-stage** - semantic-committing（スキル）で使用する専用ツール
 - **copilot CLI / Codex CLI (`copilot --model gpt-5.3-codex`, `codex review`)** - コードレビュー（codex-review, codex-plan-review スキル）
