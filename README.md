@@ -31,6 +31,8 @@ agent-skills/
 │   │   └── SKILL.md                         # スキル定義
 │   ├── gha-sha-reference/
 │   │   └── SKILL.md                         # スキル定義
+│   ├── orchestrating-cursor-cloud-agent/
+│   │   └── SKILL.md                         # スキル定義
 │   ├── planning-guardrails/
 │   │   └── SKILL.md                         # スキル定義
 │   ├── reading-notion/
@@ -76,6 +78,9 @@ gcloudやbqコマンド実行時に認証エラー（`Reauthentication required`
 
 ### semantic-committing
 コミット時、「commit」「git add」「変更を分割」の言及時に自動的に発動するスキル。git diffを分析して変更を論理的な意味単位に分割し、git-sequential-stageでhunk単位のステージングを行います。大きな変更を複数の意味のあるコミットに分けたい時に有用です。
+
+### orchestrating-cursor-cloud-agent
+Cursor Cloud Agentにタスクを委託するよう依頼された際に自動的に発動するスキル。エージェント作成、ステータスポーリング、Pull Request状態確認、Linear紐付け、レビュー・フォローアップを行います。コーディング作業はCursorに任せ、Devinは判断・監視・指示に特化します。
 
 ### updating-pr-title-and-description
 PR作成・更新時に自動的に発動するスキル。Pull Requestのタイトルと説明文を自動生成・更新します。差分やコミットメッセージを分析し、適切な説明文を作成します。説明文は日本語で記載され、`.github/PULL_REQUEST_TEMPLATE.md`がある場合はテンプレートに沿った形で生成されます。
