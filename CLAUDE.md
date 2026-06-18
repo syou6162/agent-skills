@@ -13,6 +13,7 @@ This file provides guidance to coding agents working with code in this repositor
 - `skills/codex-plan-review/SKILL.md` - Codex CLIを使ったplanファイルレビュー（実現可能性・妥当性を評価し、レビュー結果をタスクリスト化、指摘が収束するまで繰り返す、自動発動）
 - `skills/execute-plan/SKILL.md` - planモードの計画に基づいて実装を開始するスキル（ユーザー明示呼び出し）。planファイル読み取り→タスクリスト作成→タスク順次実行→コミット→codex-reviewを自動化
 - `skills/gha-sha-reference/SKILL.md` - GitHub ActionsのタグをSHA参照に変換するスキル（自動発動）
+- `skills/orchestrating-cursor-cloud-agent/SKILL.md` - Cursor Cloud Agentにタスクを委託し、監視・レビュー・フォローアップを行うスキル（自動発動）
 - `skills/planning-guardrails/SKILL.md` - Plan modeの計画作成で必須セクションを漏らさないためのガードレールを提供するスキル（自動発動）
 - `skills/reading-notion/SKILL.md` - NotionページやドキュメントをキーワードまたはURLで検索・取得し、内容を要約・説明するスキル（自動発動）
 - `skills/requesting-gcloud-bq-auth/SKILL.md` - gcloud/bqコマンドの認証エラーを検出してユーザーに認証を依頼するスキル（自動発動）
@@ -103,7 +104,10 @@ Claudeのシステムプロンプトおよび公式ドキュメントでは、XM
 
 ### 外部依存関係
 スキルごとに以下のツールを使用：
-- **GitHub CLI (`gh`)** - Pull Request操作・GitHub URL状態確認（updating-pr-title-and-description, writing-dev-diary）
+- **GitHub CLI (`gh`)** - Pull Request操作・GitHub URL状態確認（updating-pr-title-and-description, writing-dev-diary, orchestrating-cursor-cloud-agent）
+- **Cursor Cloud Agent API (`https://api.cursor.com/v1`)** - エージェント作成・追加プロンプト・ステータスポーリング（orchestrating-cursor-cloud-agent スキル）
+- **curl** - Cursor Cloud Agent API 呼び出し（orchestrating-cursor-cloud-agent スキル）
+- **Linear MCP server (`https://mcp.linear.app/mcp`)** - Linear issue の紐付け・ステータス更新（orchestrating-cursor-cloud-agent スキル）
 - **git-sequential-stage** - semantic-committing（スキル）で使用する専用ツール
 - **copilot CLI / Codex CLI (`copilot --model gpt-5.3-codex`, `codex review`)** - コードレビュー（codex-review, codex-plan-review スキル）
 - **esa-llm-scoped-guard** - 開発日誌の作成・更新・取得（writing-dev-diary, codex-review, codex-plan-review スキル）

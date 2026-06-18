@@ -1,0 +1,303 @@
+---
+name: orchestrating-cursor-cloud-agent
+description: Cursor Cloud Agentにタスクを委託するよう依頼された際に発動。エージェント作成、ステータスポーリング、Pull Request状態確認、Linear紐付け、レビュー・フォローアップを行う。
+compatibility: Requires curl, CURSOR_CLOUD_AGENT_API_KEY environment variable, gh CLI, and Linear MCP server (https://mcp.linear.app/mcp)
+---
+
+# Cursor Cloud Agent オーケストレーション
+
+DevinがオーケストレーターとしてCursor Cloud Agentにタスクを委託し、監視・レビュー・フォローアップを行います。コーディング作業はCursorに任せ、Devinは判断・監視・指示に特化します。
+
+## 使用タイミング
+
+<trigger>
+
+以下の場合にこのスキルを発動してください：
+
+- ユーザーが「Cursorに投げて」「Cursor Cloud Agentに任せて」「Cursorに委託して」と言及したとき
+- ユーザーがCursor Cloud Agentを使ったタスク実行を依頼したとき
+
+</trigger>
+
+## 前提条件
+
+- 環境変数 `CURSOR_CLOUD_AGENT_API_KEY` が設定されていること（Basic認証に使用）
+- `gh` CLI がインストール・認証済みであること（Pull Request状態確認に使用）
+- Linear MCP server (`https://mcp.linear.app/mcp`) が設定・認証済みであること
+- `curl` が使用可能であること
+
+## 実行手順
+
+<procedure>
+
+### 1. タスク内容の確認
+
+ユーザーと会話して、Cursor Cloud Agentに委託するタスク内容を固めます。
+
+確認すべき項目：
+
+- ターゲットリポジトリのURL
+- 開始ブランチ（未指定の場合は `main`）
+- タスクの概要・目的
+- 関連するLinear issue（あれば）
+- 特別な制約や注意点
+
+### 2. エージェント作成
+
+Cursor Cloud Agent APIでエージェントを作成します。
+
+```bash
+curl --request POST \
+  --url https://api.cursor.com/v1/agents \
+  -u "${CURSOR_CLOUD_AGENT_API_KEY}:" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "prompt": {
+      "text": "<タスク指示>"
+    },
+    "repos": [
+      {
+        "url": "https://github.com/<owner>/<repo>",
+        "startingRef": "<開始ブランチ>"
+      }
+    ],
+    "autoCreatePR": true
+  }'
+```
+
+<important>
+
+- `autoCreatePR: true` は必ず指定すること。後から変更できない。
+- レスポンスの `agent.url` を必ずユーザーに提示すること。API経由で作成したエージェントはWeb UIの一覧に表示されないことがあるため、直リンクが必要。
+
+</important>
+
+レスポンスから `agent.id` と `run.id` を抽出し、後続のステップで使用します。
+
+### 3. ステータスポーリング
+
+エージェントの実行が完了するまでポーリングします。
+
+```bash
+curl -s --url "https://api.cursor.com/v1/agents/<agent_id>/runs/<run_id>" \
+  -u "${CURSOR_CLOUD_AGENT_API_KEY}:"
+```
+
+- **ポーリング間隔**: 15〜30秒
+- **終了条件**: `status` が `FINISHED` / `ERROR` / `CANCELLED` / `EXPIRED` のいずれか
+- `FINISHED` 時に `result` フィールドに最終返答テキスト、`git.branches[0].prUrl` にPull RequestのURLが含まれる
+
+### 4. Pull Request状態確認
+
+`FINISHED` 後、必ず `gh pr view` でPull Requestの実際の状態を確認します。
+
+```bash
+gh pr view <pr-url> --json state,isDraft,mergeStateStatus,statusCheckRollup
+```
+
+確認項目：
+
+- Pull Request が draft かどうか
+- CI の状態
+- マージ可能かどうか
+
+<important>
+
+- **Pull Requestの状態は仮定で報告しないこと**。必ず `gh pr view` の結果に基づいて報告すること。
+- draft の場合は、ユーザーに「Pull Requestはdraft状態です。draft を外すと Copilot review もトリガーされます」と伝えること。
+
+</important>
+
+### 5. Linear 紐付け
+
+Cursor が Pull Request を作成したら、関連する Linear issue に Pull Request を紐付けます。
+
+1. Linear MCP の `get_issue` または `search_issues` で該当 issue を特定
+2. 既存のリンクを取得（`get_issue` で `links` フィールドを確認）
+3. `update_issue` で Pull Request URL をリソースリンクとして追記
+
+既存のリンクを上書きしないよう、追記する形で更新してください。
+
+### 6. 追加プロンプト（修正指示）
+
+Pull Request確認やレビューで修正が必要な場合、追加プロンプトを投入します。
+
+```bash
+curl --request POST \
+  --url "https://api.cursor.com/v1/agents/<agent_id>/runs" \
+  -u "${CURSOR_CLOUD_AGENT_API_KEY}:" \
+  --header 'Content-Type: application/json' \
+  --data '{ "prompt": { "text": "<修正指示>" } }'
+```
+
+<important>
+
+- 前の実行が `RUNNING` 中に送ると `409 agent_busy`。必ず完了を待ってから投入すること。
+- 修正プロンプトは抽象的な説明ではなく、具体的なコード例を含めること。
+
+</important>
+
+### 7. マージ完了後の Linear ステータス更新
+
+Pull Request がマージされたら、Linear issue のステータスを Done に変更します。
+
+1. `list_issue_statuses` でチーム内のステータス一覧を取得し、Done に相当するステータス ID を特定
+2. `update_issue` の `stateId` で該当ステータス ID を指定して更新
+
+</procedure>
+
+## オーケストレーションパターン
+
+### パターンA: タスク委託 → Pull Request確認
+
+1. ユーザーと会話してタスク内容を固める
+2. Cursorにエージェント作成APIで投げる
+3. セッションURLをユーザーに提示
+4. ステータスポーリング
+5. `gh pr view` でPull Request状態を確認
+6. Pull RequestのURL・状態を報告
+7. Linear に Pull Request 紐付け
+
+### パターンB: CI失敗時の修正
+
+1. `gh pr view` / `gh pr checks` でCI確認
+2. 失敗内容を読み取り
+3. 修正プロンプトを `POST /v1/agents/{id}/runs` で投入
+4. CIパスまで繰り返す
+
+### パターンC: Copilot review 対応
+
+1. `gh pr view` でPull Requestの状態を確認
+2. draft の場合はユーザーに draft を外すよう報告（Copilot review 依頼のトリガー）
+3. `gh pr view` でレビューコメントを検知
+4. 修正が必要なものを修正プロンプトとしてCursorに投げる
+
+### パターンD: Devin自身がレビュアー
+
+1. Pull Requestの差分を確認し、以下の観点でレビューする：
+   - **テスト網羅性**: プロダクションコードのエラーパス・分岐が全てテストされているか
+   - **コード一貫性**: リポジトリ全体の命名規則・コードスタイル・構造パターンとの整合性
+   - **設計上の問題**: 不要な複雑さ、責務の混在、抽象化レベルの不統一
+2. 問題を発見したら、具体的なコード例を含む修正プロンプトを `POST /v1/agents/{id}/runs` で投入
+3. 修正 run は1つずつ完了を待ってから次を送る
+4. 修正完了後に CI green を確認
+
+### パターン D → C の逐次実行
+
+Devin レビュー（パターンD）と Copilot レビュー対応（パターンC）を同じ Pull Request で行う場合：
+
+1. まず Devin 自身がレビューして修正指示 → CI green 確認
+2. 次に Copilot コメントを処理（対応 → resolve）
+3. 最終的に CI green を確認してユーザーに報告
+
+この順序にする理由：Devin レビューで構造的な問題を先に直しておくと、Copilot の指摘の一部が自然に解消される場合がある。
+
+## 重要な注意事項
+
+### すべきこと
+
+<important>
+
+- `autoCreatePR: true` を必ず指定する
+- エージェント作成直後に `agent.url` をユーザーに提示する
+- ステータスポーリングは15〜30秒間隔で行う
+- `FINISHED` 後は必ず `gh pr view` でPull Request状態を確認する
+- Linear 紐付けは既存リンクを上書きせず追記する
+- 修正プロンプトは具体的なコード例を含める
+
+</important>
+
+### してはいけないこと
+
+<important>
+
+- `autoCreatePR` を後から変更しようとしない（作成時のみ設定可能）
+- Pull Requestの状態を仮定で報告しない
+- `RUNNING` 中に追加プロンプトを投げない（`409 agent_busy` になる）
+- 複数の修正を同時にCursorに投げない（1つずつ完了を待つ）
+
+</important>
+
+### 既知の制約
+
+<important>
+
+- `autoCreatePR` は作成時のみ設定可能（後から変更不可）
+- CursorのPull Requestはデフォルトdraft になることが多いが、必ず `gh pr view` で実際の状態を確認する
+- Copilot reviewの依頼はAPI/bot経由では不可。人間がGitHub UI上で行う
+- API経由で作成したエージェントはWeb UIの一覧に出ないことがある。直リンクをユーザーに提示する
+- 1エージェント1実行。前の実行が終わってから次を投げる
+
+</important>
+
+## 実装例
+
+<examples>
+
+### 例1: エージェント作成とポーリング
+
+<example>
+
+**エージェント作成：**
+
+```bash
+curl --request POST \
+  --url https://api.cursor.com/v1/agents \
+  -u "${CURSOR_CLOUD_AGENT_API_KEY}:" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "prompt": {
+      "text": "foo/bar リポジトリの README.md を更新し、セットアップ手順を追加してください。"
+    },
+    "repos": [
+      {
+        "url": "https://github.com/foo/bar",
+        "startingRef": "main"
+      }
+    ],
+    "autoCreatePR": true
+  }'
+```
+
+**レスポンスからの抽出：**
+
+- `agent.url`: `https://cursor.com/agents/<id>`
+- `agent.id`: `<id>`
+- `run.id`: `<run_id>`
+
+**ユーザーへの提示：**
+
+> Cursor Cloud Agent セッションを作成しました: `https://cursor.com/agents/<id>`
+
+**ポーリング：**
+
+```bash
+curl -s --url "https://api.cursor.com/v1/agents/<id>/runs/<run_id>" \
+  -u "${CURSOR_CLOUD_AGENT_API_KEY}:"
+```
+
+`status` が `FINISHED` になるまで15〜30秒間隔で繰り返す。
+
+</example>
+
+### 例2: Pull Request状態確認
+
+<example>
+
+```bash
+gh pr view https://github.com/foo/bar/pull/123 --json state,isDraft,mergeStateStatus,statusCheckRollup
+```
+
+**draft の場合の報告例：**
+
+> Pull Request は作成されました: https://github.com/foo/bar/pull/123
+> 現在 draft 状態です。draft を外すと Copilot review もトリガーされます。
+
+</example>
+
+</examples>
+
+## 参考リンク
+
+- [Cursor Cloud Agent API](https://api.cursor.com/v1)
+- [Linear MCP Server](https://linear.app/docs/mcp)
