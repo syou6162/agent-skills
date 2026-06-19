@@ -84,7 +84,11 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - 関連リンク
    - 該当ファイルや行
    - プロジェクトのリンク
-   - 依存元・依存先のIssueを確認するための指示
+   - 依存関係の確認手順
+     - 作業前にプロジェクト内のIssueを確認する
+     - 自身を `blockedBy` に設定しているIssue（依存元）が完了していることを確認する
+     - 完了していない場合は、該当Issueが完了するまで作業を開始しない
+     - 自身が `blockedBy` に設定しているIssue（依存先）の状況を把握する
 
    ```bash
    # Linear MCP server を使って issue を作成する例（mcp_call_tool で実行）
@@ -166,7 +170,11 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
   - プロジェクト: https://linear.app/project/ユーザー認証機能
   - 要件: https://example.com/requirements/auth
 - 該当ファイル: `src/auth/login.ts`
-- 確認事項: 作業前にプロジェクト内のIssueを確認し、特に依存元・依存先のIssueの状況を把握すること
+- 依存関係の確認手順:
+  - 作業前にプロジェクト「ユーザー認証機能」内のIssueを確認する
+  - 自身を `blockedBy` に設定しているIssue（依存元）が完了していることを確認する
+  - 完了していない場合は、該当Issueが完了するまで作業を開始しない
+  - 自身が `blockedBy` に設定しているIssue（依存先）の状況を把握する
 
 ### 依存関係
 
