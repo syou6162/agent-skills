@@ -8,7 +8,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。分割する際は**新しいプロジェクトを作成し**、そのプロジェクト内にフラットなIssueを作成します。Issue間の関係は、**階層構造ではなく`blockedBy`リレーション**で表現します。
 
-作成したIssueはLinearを経由してLLM Agentにアサインされるため、各Issueは単独で見てもself-containedで分かる形にしてください。リンクや該当行なども必ず明記してください。
+作成したIssueはLinearを経由してLLM Agentにアサインされます。
 
 プロンプトに特定の意図（例：「3つのIssueに分割して」「Aを先にやってからBを作成して」など）が加えられている場合は、その意図をタスク分解と依存関係の設定に反映しつつ、以下の手順を順に実行してください。
 
@@ -73,7 +73,16 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 5. **Issueの作成**
 
-   作成したプロジェクト内に、Linear MCP serverを使ってIssueを作成する。
+   作成したプロジェクト内に、Linear MCP serverを使ってIssueを作成する。各Issueは単独で見てもself-containedで分かる形にし、以下を含める。
+
+   - タイトル
+   - 目的（なぜやるか）
+   - 背景
+   - 作業内容
+   - 受け入れ条件
+   - 制約
+   - 関連リンク
+   - 該当ファイルや行
 
    ```bash
    # Linear MCP server を使って issue を作成する例（mcp_call_tool で実行）
@@ -141,6 +150,18 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 2. 認証APIの実装
 3. 認証APIのテスト作成
 4. フロントエンドと認証APIの連携
+
+### Issueの記載例（認証APIの実装）
+
+- 目的: 一般ユーザーがメール/パスワードでログインできるAPIを提供する
+- 背景: 新規サービス公開に向けて、メール/パスワード認証が必要
+- 作業内容:
+  - `src/auth/login.ts` にログインエンドポイントを実装する
+  - パスワードハッシュの検証処理を追加する
+- 受け入れ条件: `/api/login` が正しい認証情報で200を返し、JWTを発行すること
+- 制約: 既存の管理画面認証基盤を流用する。SSOは今回のスコープ外
+- 関連リンク: https://example.com/requirements/auth
+- 該当ファイル: `src/auth/login.ts`
 
 ### 依存関係
 
