@@ -43,7 +43,6 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - 分割したい作業単位
    - 各作業の依存関係（どのIssueが他のIssueをブロックするか）
    - Linearのチーム（Team）またはプロジェクト（Project）
-   - ラベル、担当者、期限などの属性（任意）
 
 2. **タスクの分解**
 
