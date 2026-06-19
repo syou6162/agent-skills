@@ -86,9 +86,9 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - プロジェクトのリンク
    - 依存関係の確認手順
      - 作業前にプロジェクト内のIssueを確認する
-     - 自身を `blockedBy` に設定しているIssue（依存元）が完了していることを確認する
-     - 完了していない場合は、該当Issueが完了するまで作業を開始しない
-     - 自身が `blockedBy` に設定しているIssue（依存先）の状況を把握する
+     - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容が終わっているかを把握する
+     - 自身が `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
+     - 前段・後段のタスク内容を踏まえて、今回のタスクの作業内容と受け入れ条件を調整する
 
    ```bash
    # Linear MCP server を使って issue を作成する例（mcp_call_tool で実行）
@@ -172,9 +172,9 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 - 該当ファイル: `src/auth/login.ts`
 - 依存関係の確認手順:
   - 作業前にプロジェクト「ユーザー認証機能」内のIssueを確認する
-  - 自身を `blockedBy` に設定しているIssue（依存元）が完了していることを確認する
-  - 完了していない場合は、該当Issueが完了するまで作業を開始しない
-  - 自身が `blockedBy` に設定しているIssue（依存先）の状況を把握する
+  - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容が終わっているかを把握する
+  - 自身が `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
+  - 前段・後段のタスク内容を踏まえて、今回のタスクの作業内容と受け入れ条件を調整する
 
 ### 依存関係
 
