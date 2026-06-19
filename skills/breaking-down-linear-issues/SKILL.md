@@ -1,7 +1,7 @@
 ---
 name: breaking-down-linear-issues
 description: Linearに大きなタスクを複数のIssueに分割して作成する際に使用。新しいプロジェクトを作成し、その中にフラットなIssueを作成し、依存関係はblockedByリレーションで表現する。
-compatibility: Requires Linear MCP server (https://mcp.linear.dev)
+compatibility: Requires Linear MCP server (https://mcp.linear.app/mcp)
 ---
 
 # Linearに大きなタスクを分割してIssueを作成する
@@ -39,7 +39,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - Linearのチーム（Team）
    - プロジェクト概要に記載すべき内容（背景、スコープ、制約、達成条件、関連リンクなど）
    - 分割したい作業単位
-   - 各作業の依存関係（どのIssueが他のIssueをブロックするか）
+   - 各作業の依存関係（どのIssueがどのIssueにブロックされるか）
 
 2. **タスクの分解**
 
@@ -86,8 +86,8 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - プロジェクトのリンク
    - 依存関係の確認手順
      - 作業前にプロジェクト内のIssueを確認する
-     - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容かを把握する
-     - 自身が `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
+     - 自身の `blockedBy` に設定されているIssue（前段のタスク）を読み、どのような内容かを把握する
+     - 自身を `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
      - 前段・後段のタスク内容を踏まえて、今回のタスクの作業内容と受け入れ条件を調整する
 
    ```bash
@@ -103,7 +103,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
    作成したIssue間で依存関係がある場合は、**必ず`blockedBy`リレーション**で設定する。
 
-   - 後に実行すべきIssueを先に作成されたIssueでブロックする
+   - 前提となるIssueを、後続のIssueの `blockedBy` に設定する
    - `blockedBy` の方向に注意する
 
 7. **結果の報告**
@@ -124,7 +124,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 | 状況 | 表現方法 | 理由 |
 |------|----------|------|
 | Issue A が Issue B の完了を待っている | Issue B を Issue A の `blockedBy` に設定 | B が完了するまで A が進めないという関係を表現 |
-| 複数の Issue が同じ Issue をブロックしている | 複数の `blockedBy` リレーションを設定 | 複数の依存関係を並列で表現 |
+| 同じ Issue が複数の Issue にブロックされている | 複数の `blockedBy` リレーションを設定 | 複数の依存関係を並列で表現 |
 | 特に依存関係がない | `blockedBy` を設定しない | 依存関係がない場合は無理に作らない |
 
 </decision-criteria>
@@ -172,20 +172,20 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 - 該当ファイル: `src/auth/login.ts`
 - 依存関係の確認手順:
   - 作業前にプロジェクト「ユーザー認証機能」内のIssueを確認する
-  - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容かを把握する
-  - 自身が `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
+  - 自身の `blockedBy` に設定されているIssue（前段のタスク）を読み、どのような内容かを把握する
+  - 自身を `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
   - 前段・後段のタスク内容を踏まえて、今回のタスクの作業内容と受け入れ条件を調整する
 
 ### 依存関係
 
-- 認証APIのテスト作成は、認証APIの実装をブロックする
-- フロントエンドと認証APIの連携は、ログイン画面のUI作成と認証APIの実装をブロックする
+- 認証APIのテスト作成は、認証APIの実装にブロックされる
+- フロントエンドと認証APIの連携は、ログイン画面のUI作成と認証APIの実装にブロックされる
 
 ### 実行後の状態
 
 - プロジェクト「ユーザー認証機能」を作成
-- 認証APIの実装 → 認証APIのテスト作成 (`blockedBy`)
-- ログイン画面のUI作成 → フロントエンドと認証APIの連携 (`blockedBy`)
-- 認証APIの実装 → フロントエンドと認証APIの連携 (`blockedBy`)
+- 認証APIのテスト作成 (`blockedBy`: 認証APIの実装)
+- フロントエンドと認証APIの連携 (`blockedBy`: ログイン画面のUI作成)
+- フロントエンドと認証APIの連携 (`blockedBy`: 認証APIの実装)
 
 </example>
