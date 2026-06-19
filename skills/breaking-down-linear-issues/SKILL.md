@@ -1,6 +1,6 @@
 ---
-name: linear-issue-creator
-description: Linearに大きなタスクを複数のIssueに分割して作成し、Issue間の依存関係をblockedByリレーションで表現する際に使用。sub-issueや階層構造を避け、依存関係のみをblockedByで表現する。
+name: breaking-down-linear-issues
+description: Linearに大きなタスクを複数のIssueに分割して作成する際に使用。sub-issueや階層構造を避け、Issue間の依存関係はblockedByリレーションで表現する。
 compatibility: Requires Linear GraphQL API or Linear MCP server (https://mcp.linear.dev)
 ---
 
