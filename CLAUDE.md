@@ -13,11 +13,11 @@ This file provides guidance to coding agents working with code in this repositor
 - `skills/codex-plan-review/SKILL.md` - Codex CLIを使ったplanファイルレビュー（実現可能性・妥当性を評価し、レビュー結果をタスクリスト化、指摘が収束するまで繰り返す、自動発動）
 - `skills/execute-plan/SKILL.md` - planモードの計画に基づいて実装を開始するスキル（ユーザー明示呼び出し）。planファイル読み取り→タスクリスト作成→タスク順次実行→コミット→codex-reviewを自動化
 - `skills/gha-sha-reference/SKILL.md` - GitHub ActionsのタグをSHA参照に変換するスキル（自動発動）
+- `skills/breaking-down-linear-issues/SKILL.md` - Linearに大きなタスクを複数のIssueに分割して作成し、Issue間の依存関係を`blockedBy`で表現するスキル（自動発動）
 - `skills/orchestrating-cursor-cloud-agent/SKILL.md` - Cursor Cloud Agentにタスクを委託し、監視・レビュー・フォローアップを行うスキル（自動発動）
 - `skills/planning-guardrails/SKILL.md` - Plan modeの計画作成で必須セクションを漏らさないためのガードレールを提供するスキル（自動発動）
 - `skills/reading-notion/SKILL.md` - NotionページやドキュメントをキーワードまたはURLで検索・取得し、内容を要約・説明するスキル（自動発動）
 - `skills/requesting-gcloud-bq-auth/SKILL.md` - gcloud/bqコマンドの認証エラーを検出してユーザーに認証を依頼するスキル（自動発動）
-- `skills/semantic-committing/SKILL.md` - git diffを分析し、変更を論理的単位に分割してコミットするスキル（自動発動）
 - `skills/updating-pr-title-and-description/SKILL.md` - PRタイトル・説明文の自動生成・更新スキル（自動発動）
 - `skills/writing-dev-diary/SKILL.md` - esa-llm-scoped-guardで開発日誌を新規作成・更新するスキル（自動発動）
 
@@ -51,10 +51,7 @@ npx skills add syou6162/agent-skills
 - [スキル](https://docs.claude.com/en/docs/claude-code/skills)
 ### XMLタグ構造化の実験（パイロット）
 
-**実験対象**:
-- `skills/semantic-committing/SKILL.md` - スキル
-
-Claudeのシステムプロンプトおよび公式ドキュメントでは、XMLタグによるプロンプト構造化が推奨されています。このリポジトリでは、上記ファイルでXMLタグ化を試験的に導入しています。
+Claudeのシステムプロンプトおよび公式ドキュメントでは、XMLタグによるプロンプト構造化が推奨されています。このリポジトリでは、複数のスキルでXMLタグ化を利用しています。
 
 **標準XMLタグ語彙**:
 ```markdown
@@ -107,7 +104,7 @@ Claudeのシステムプロンプトおよび公式ドキュメントでは、XM
 - **GitHub CLI (`gh`)** - Pull Request操作・GitHub URL状態確認（updating-pr-title-and-description, writing-dev-diary, orchestrating-cursor-cloud-agent）
 - **Cursor Cloud Agent API (`https://api.cursor.com/v1`)** - エージェント作成・追加プロンプト・ステータスポーリング（orchestrating-cursor-cloud-agent スキル）
 - **cursor-agent-cli (`https://github.com/syou6162/cursor-agent-cli`)** - Cursor Cloud Agent API 呼び出し（orchestrating-cursor-cloud-agent スキル）
-- **Linear MCP server (`https://mcp.linear.app/mcp`)** - Linear issue の紐付け・ステータス更新（orchestrating-cursor-cloud-agent スキル）
+- **Linear MCP server (`https://mcp.linear.app/mcp`)** - Linear issue の紐付け・ステータス更新（orchestrating-cursor-cloud-agent スキル）、Linear への issue 作成・依存関係設定（breaking-down-linear-issues スキル）
 - **git-sequential-stage** - semantic-committing（スキル）で使用する専用ツール
 - **copilot CLI / Codex CLI (`copilot --model gpt-5.3-codex`, `codex review`)** - コードレビュー（codex-review, codex-plan-review スキル）
 - **esa-llm-scoped-guard** - 開発日誌の作成・更新・取得（writing-dev-diary, codex-review, codex-plan-review スキル）
