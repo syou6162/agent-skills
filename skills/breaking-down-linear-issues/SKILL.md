@@ -1,18 +1,18 @@
 ---
 name: breaking-down-linear-issues
-description: Linearに大きなタスクを複数のIssueに分割して作成する際に使用。sub-issueや階層構造を避け、Issue間の依存関係はblockedByリレーションで表現する。
+description: Linearに大きなタスクを複数のIssueに分割して作成する際に使用。階層構造を避け、Issue間の依存関係はblockedByリレーションで表現する。
 compatibility: Requires Linear GraphQL API or Linear MCP server (https://mcp.linear.dev)
 ---
 
 # Linearに大きなタスクを分割してIssueを作成する
 
-ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。Issue間の関係は、**sub-issueではなく`blockedBy`リレーション**で表現します。
+ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。Issue間の関係は、**階層構造ではなく`blockedBy`リレーション**で表現します。
 
 ## 禁止事項
 
 <important>
 
-- [ ] **sub-issueの作成禁止**: sub-issue機能を使って階層構造を作らないこと
+- [ ] **階層構造の作成禁止**: 階層構造や上下関係を作らないこと
 - [ ] **階層表現の禁止**: 上下関係や階層構造を示す言葉を使わず、単に「分割したIssue」「Issue間の依存関係」として表現すること
 - [ ] **依存関係の表現**: 分割したIssue間の依存関係は、必ず`blockedBy`リレーションで表現すること
 - [ ] **手順の厳守**: <procedure>タグ内で指定された手順を一つずつ順番に実行すること
