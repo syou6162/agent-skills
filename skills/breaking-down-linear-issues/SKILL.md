@@ -86,7 +86,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - プロジェクトのリンク
    - 依存関係の確認手順
      - 作業前にプロジェクト内のIssueを確認する
-     - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容が終わっているかを把握する
+     - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容かを把握する
      - 自身が `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
      - 前段・後段のタスク内容を踏まえて、今回のタスクの作業内容と受け入れ条件を調整する
 
@@ -172,7 +172,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 - 該当ファイル: `src/auth/login.ts`
 - 依存関係の確認手順:
   - 作業前にプロジェクト「ユーザー認証機能」内のIssueを確認する
-  - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容が終わっているかを把握する
+  - 自身を `blockedBy` に設定しているIssue（前段のタスク）を読み、どのような内容かを把握する
   - 自身が `blockedBy` に設定しているIssue（後段のタスク）を読み、後段で何を行うためには今回のタスクで何が必要かを把握する
   - 前段・後段のタスク内容を踏まえて、今回のタスクの作業内容と受け入れ条件を調整する
 
