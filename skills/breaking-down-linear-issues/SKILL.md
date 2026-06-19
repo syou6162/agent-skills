@@ -37,6 +37,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - タスクの概要（タイトル・目的）
    - 作成するプロジェクト名
    - Linearのチーム（Team）
+   - プロジェクト概要に記載すべき内容（背景、制約、達成条件、関連リンクなど）
    - 分割したい作業単位
    - 各作業の依存関係（どのIssueが他のIssueをブロックするか）
 
@@ -52,7 +53,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
    ユーザーに以下を提示し、承認を得てから作成を実行する。
 
-   - 作成するプロジェクト名
+   - 作成するプロジェクト名とプロジェクト概要（背景、制約、達成条件、関連リンク）
    - 作成するIssueの一覧（タイトルと説明）
    - 各Issue間の依存関係（`blockedBy` で表現）
    - 所属チーム
@@ -66,7 +67,8 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    # Linear project create のスキーマに従って引数を指定する
    ```
 
-   - プロジェクト名と所属チームを指定する
+   - プロジェクト名、所属チーム、プロジェクト概要を設定する
+   - プロジェクト概要には個別Issueの詳細を書かず、背景・制約・達成条件・関連リンクなどを記載する
    - 作成後にプロジェクトIDを記録する
 
 5. **Issueの作成**
@@ -123,6 +125,12 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 ### プロジェクト
 
 - プロジェクト名: ユーザー認証機能
+- 概要:
+  - なぜやるか: 現在の認証は管理画面のみで、一般ユーザー向けログインがない
+  - 背景: 新規サービス公開に向けて、メール/パスワード認証とソーシャル認証が必要
+  - 制約: 既存の管理画面認証基盤を流用し、SSOは今回のスコープ外
+  - 達成条件: 一般ユーザーがログインし、セッションを維持できる状態になる
+  - 関連リンク: https://example.com/requirements/auth
 
 ### 分割結果
 
