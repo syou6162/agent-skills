@@ -1,12 +1,12 @@
 ---
 name: breaking-down-linear-issues
-description: Linearに大きなタスクを複数のIssueに分割して作成する際に使用。階層構造を避け、Issue間の依存関係はblockedByリレーションで表現する。
+description: Linearに大きなタスクを複数のIssueに分割して作成する際に使用。新しいプロジェクトを作成し、その中にフラットなIssueを作成し、依存関係はblockedByリレーションで表現する。
 compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 ---
 
 # Linearに大きなタスクを分割してIssueを作成する
 
-ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。Issue間の関係は、**階層構造ではなく`blockedBy`リレーション**で表現します。
+ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。分割する際は**新しいプロジェクトを作成し**、そのプロジェクト内にフラットなIssueを作成します。Issue間の関係は、**階層構造ではなく`blockedBy`リレーション**で表現します。
 
 作成したIssueはLinearを経由してLLM Agentにアサインされるため、各Issueは単独で見てもself-containedで分かる形にしてください。リンクや該当行なども必ず明記してください。
 
@@ -16,9 +16,10 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 <important>
 
+- タスクを分割する際は、新しいLinearプロジェクトを作成する。
 - 各Issueは独立した同等のフラットな単位として作成する。sub-issueや親子関係は作らない。
 - Issue間の依存関係は、必ず `blockedBy` リレーションで表現する。
-- ユーザーが承認するまで、Issueの作成を実行しない。
+- ユーザーが承認するまで、プロジェクト・Issueの作成を実行しない。
 - 以下の手順を一つずつ順番に実行する。
 
 </important>
@@ -34,9 +35,10 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    ユーザーから以下の情報を確認する。情報が不足している場合は、ユーザーに確認を取る。
 
    - タスクの概要（タイトル・目的）
+   - 作成するプロジェクト名
+   - Linearのチーム（Team）
    - 分割したい作業単位
    - 各作業の依存関係（どのIssueが他のIssueをブロックするか）
-   - Linearのチーム（Team）またはプロジェクト（Project）
 
 2. **タスクの分解**
 
@@ -50,13 +52,26 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
    ユーザーに以下を提示し、承認を得てから作成を実行する。
 
+   - 作成するプロジェクト名
    - 作成するIssueの一覧（タイトルと説明）
    - 各Issue間の依存関係（`blockedBy` で表現）
-   - チーム/プロジェクトなどの設定
+   - 所属チーム
 
-4. **Issueの作成**
+4. **プロジェクトの作成**
 
-   承認を得たら、Linear MCP serverを使ってIssueを作成する。
+   承認を得たら、Linear MCP serverを使ってプロジェクトを作成する。
+
+   ```bash
+   # Linear MCP server を使って project を作成する例（mcp_call_tool で実行）
+   # Linear project create のスキーマに従って引数を指定する
+   ```
+
+   - プロジェクト名と所属チームを指定する
+   - 作成後にプロジェクトIDを記録する
+
+5. **Issueの作成**
+
+   作成したプロジェクト内に、Linear MCP serverを使ってIssueを作成する。
 
    ```bash
    # Linear MCP server を使って issue を作成する例（mcp_call_tool で実行）
@@ -64,19 +79,21 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    ```
 
    - 各Issueを個別に作成する
+   - 作成するIssueに作成したプロジェクトを紐付ける
    - 作成後に各IssueのID（identifierまたはUUID）を記録する
 
-5. **blockedByリレーションの設定**
+6. **blockedByリレーションの設定**
 
    作成したIssue間で依存関係がある場合は、**必ず`blockedBy`リレーション**で設定する。
 
    - 後に実行すべきIssueを先に作成されたIssueでブロックする
    - `blockedBy` の方向に注意する
 
-6. **結果の報告**
+7. **結果の報告**
 
    ユーザーに以下を報告する。
 
+   - 作成したプロジェクトの名前とURL
    - 作成したIssueのタイトルとURL
    - 設定した`blockedBy`の一覧
    - 次に行うべき作業（あれば）
@@ -103,6 +120,10 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 「ユーザー認証機能を作りたい。大きなタスクなので分割してIssueを作成してほしい。」
 
+### プロジェクト
+
+- プロジェクト名: ユーザー認証機能
+
 ### 分割結果
 
 1. ログイン画面のUI作成
@@ -117,6 +138,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 ### 実行後の状態
 
+- プロジェクト「ユーザー認証機能」を作成
 - 認証APIの実装 → 認証APIのテスト作成 (`blockedBy`)
 - ログイン画面のUI作成 → フロントエンドと認証APIの連携 (`blockedBy`)
 - 認証APIの実装 → フロントエンドと認証APIの連携 (`blockedBy`)
