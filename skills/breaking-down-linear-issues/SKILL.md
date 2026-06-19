@@ -8,6 +8,17 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。Issue間の関係は、**階層構造ではなく`blockedBy`リレーション**で表現します。
 
+## 重要な前提
+
+<important>
+
+- 本スキルでIssueを作成する実行主体は人間ではなく、LLM Agentです。
+- 作成したIssueはLinearを経由してLLM Agentにアサインされます。
+- したがって、各Issueは単独で見てもself-containedで分かる形にしてください。
+  - リンクや該当行なども必ず明記してください。
+
+</important>
+
 ## 制約
 
 <important>
