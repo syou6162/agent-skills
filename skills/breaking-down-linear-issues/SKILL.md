@@ -1,7 +1,7 @@
 ---
 name: breaking-down-linear-issues
 description: Linearに大きなタスクを複数のIssueに分割して作成する際に使用。階層構造を避け、Issue間の依存関係はblockedByリレーションで表現する。
-compatibility: Requires Linear GraphQL API or Linear MCP server (https://mcp.linear.dev)
+compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 ---
 
 # Linearに大きなタスクを分割してIssueを作成する
@@ -50,7 +50,7 @@ compatibility: Requires Linear GraphQL API or Linear MCP server (https://mcp.lin
    ユーザーから得た情報に基づき、タスクを意味のある単位に分割してください。
 
    - 各Issueは独立して完了可能な単位にすること
-   - 1つのIssueに詰め込みすぎないこと
+   - 1つのIssueは、diffが500〜1000行程度になるようなPRに対応するサイズにすること
    - 分割したIssue間の依存関係を明確にすること
 
 3. **作成内容の確認**
@@ -63,10 +63,10 @@ compatibility: Requires Linear GraphQL API or Linear MCP server (https://mcp.lin
 
 4. **Issueの作成**
 
-   承認を得たら、Linear GraphQL APIまたはLinear MCP serverを使ってIssueを作成してください。
+   承認を得たら、Linear MCP serverを使ってIssueを作成してください。
 
    ```bash
-   # Linear MCP serverを利用する場合の例（mcp_call_toolで実行）
+   # Linear MCP server を使って issue を作成する例（mcp_call_tool で実行）
    # Linear issue create のスキーマに従って引数を指定する
    ```
 
