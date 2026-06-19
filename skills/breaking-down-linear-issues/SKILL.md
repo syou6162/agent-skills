@@ -8,16 +8,9 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。Issue間の関係は、**階層構造ではなく`blockedBy`リレーション**で表現します。
 
-## 重要な前提
+作成したIssueはLinearを経由してLLM Agentにアサインされるため、各Issueは単独で見てもself-containedで分かる形にしてください。リンクや該当行なども必ず明記してください。
 
-<important>
-
-- 本スキルでIssueを作成する実行主体は人間ではなく、LLM Agentです。
-- 作成したIssueはLinearを経由してLLM Agentにアサインされます。
-- したがって、各Issueは単独で見てもself-containedで分かる形にしてください。
-  - リンクや該当行なども必ず明記してください。
-
-</important>
+プロンプトに特定の意図（例：「3つのIssueに分割して」「Aを先にやってからBを作成して」など）が加えられている場合は、その意図をタスク分解と依存関係の設定に反映しつつ、以下の手順を順に実行してください。
 
 ## 制約
 
@@ -25,18 +18,8 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 - 各Issueは独立した同等のフラットな単位として作成する。sub-issueや親子関係は作らない。
 - Issue間の依存関係は、必ず `blockedBy` リレーションで表現する。
-- <procedure>タグの手順を一つずつ順番に実行する。
 - ユーザーが承認するまで、Issueの作成を実行しない。
-
-</important>
-
-## プロンプトの扱い
-
-<important>
-
-- 呼び出し時のプロンプトに特に明確な指示がされていない場合は、実行手順通りに進めてください
-- プロンプトに特定の意図（例：「3つのIssueに分割して」「Aを先にやってからBを作成して」など）が加えられている場合は、その意図をタスク分解と依存関係の設定に反映してください
-- ただし、実行手順は一切変更せず、記載された手順に従って実行してください
+- 以下の手順を一つずつ順番に実行する。
 
 </important>
 
@@ -48,7 +31,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 1. **入力の整理**
 
-   ユーザーから以下の情報を確認してください。情報が不足している場合は、ユーザーに確認を取ってください。
+   ユーザーから以下の情報を確認する。情報が不足している場合は、ユーザーに確認を取る。
 
    - タスクの概要（タイトル・目的）
    - 分割したい作業単位
@@ -57,7 +40,7 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 2. **タスクの分解**
 
-   ユーザーから得た情報に基づき、タスクを意味のある単位に分割してください。
+   ユーザーから得た情報に基づき、タスクを意味のある単位に分割する。
 
    - 各Issueは独立して完了可能な単位にすること
    - 1つのIssueは、diffが500〜1000行程度になるようなPRに対応するサイズにすること
@@ -65,15 +48,15 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 3. **作成内容の確認**
 
-   ユーザーに以下の内容を提示し、承認を得てから作成を実行してください。
+   ユーザーに以下を提示し、承認を得てから作成を実行する。
 
    - 作成するIssueの一覧（タイトルと説明）
    - 各Issue間の依存関係（`blockedBy` で表現）
-   - チーム/プロジェクト、ラベル、担当者などの設定
+   - チーム/プロジェクトなどの設定
 
 4. **Issueの作成**
 
-   承認を得たら、Linear MCP serverを使ってIssueを作成してください。
+   承認を得たら、Linear MCP serverを使ってIssueを作成する。
 
    ```bash
    # Linear MCP server を使って issue を作成する例（mcp_call_tool で実行）
@@ -85,14 +68,14 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
 
 5. **blockedByリレーションの設定**
 
-   作成したIssue間で依存関係がある場合は、**必ず`blockedBy`リレーション**で設定してください。
+   作成したIssue間で依存関係がある場合は、**必ず`blockedBy`リレーション**で設定する。
 
    - 後に実行すべきIssueを先に作成されたIssueでブロックする
    - `blockedBy` の方向に注意する
 
 6. **結果の報告**
 
-   ユーザーに以下を報告してください。
+   ユーザーに以下を報告する。
 
    - 作成したIssueのタイトルとURL
    - 設定した`blockedBy`の一覧
