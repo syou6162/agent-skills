@@ -83,6 +83,8 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
    - 制約
    - 関連リンク
    - 該当ファイルや行
+   - プロジェクトのリンク
+   - 依存元・依存先のIssueを確認するための指示
 
    ```bash
    # Linear MCP server を使って issue を作成する例（mcp_call_tool で実行）
@@ -160,8 +162,11 @@ compatibility: Requires Linear MCP server (https://mcp.linear.dev)
   - パスワードハッシュの検証処理を追加する
 - 受け入れ条件: `/api/login` が正しい認証情報で200を返し、JWTを発行すること
 - 制約: 既存の管理画面認証基盤を流用する。SSOは今回のスコープ外
-- 関連リンク: https://example.com/requirements/auth
+- 関連リンク:
+  - プロジェクト: https://linear.app/project/ユーザー認証機能
+  - 要件: https://example.com/requirements/auth
 - 該当ファイル: `src/auth/login.ts`
+- 確認事項: 作業前にプロジェクト内のIssueを確認し、特に依存元・依存先のIssueの状況を把握すること
 
 ### 依存関係
 
