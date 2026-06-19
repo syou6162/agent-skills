@@ -13,7 +13,7 @@ compatibility: Requires Linear GraphQL API or Linear MCP server (https://mcp.lin
 <important>
 
 - [ ] **sub-issueの作成禁止**: sub-issue機能を使って階層構造を作らないこと
-- [ ] **階層表現の禁止**: 「親Issue」「子Issue」「Epic」といった上下関係を示す言葉を使わず、単に「分割したIssue」「Issue間の依存関係」として表現すること
+- [ ] **階層表現の禁止**: 上下関係や階層構造を示す言葉を使わず、単に「分割したIssue」「Issue間の依存関係」として表現すること
 - [ ] **依存関係の表現**: 分割したIssue間の依存関係は、必ず`blockedBy`リレーションで表現すること
 - [ ] **手順の厳守**: <procedure>タグ内で指定された手順を一つずつ順番に実行すること
 - [ ] ユーザーが承認するまでIssueの作成を実行しないこと
