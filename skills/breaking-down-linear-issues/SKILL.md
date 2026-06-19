@@ -8,15 +8,14 @@ compatibility: Requires Linear GraphQL API or Linear MCP server (https://mcp.lin
 
 ユーザーが大きなタスクをLinearにIssueとして登録したい場合、タスクを分割して複数のIssueを作成してください。Issue間の関係は、**階層構造ではなく`blockedBy`リレーション**で表現します。
 
-## 禁止事項
+## 制約
 
 <important>
 
-- [ ] **階層構造の作成禁止**: 階層構造や上下関係を作らないこと
-- [ ] **階層表現の禁止**: 上下関係や階層構造を示す言葉を使わず、単に「分割したIssue」「Issue間の依存関係」として表現すること
-- [ ] **依存関係の表現**: 分割したIssue間の依存関係は、必ず`blockedBy`リレーションで表現すること
-- [ ] **手順の厳守**: <procedure>タグ内で指定された手順を一つずつ順番に実行すること
-- [ ] ユーザーが承認するまでIssueの作成を実行しないこと
+- 各Issueは独立した同等のフラットな単位として作成する。sub-issueや親子関係は作らない。
+- Issue間の依存関係は、必ず `blockedBy` リレーションで表現する。
+- <procedure>タグの手順を一つずつ順番に実行する。
+- ユーザーが承認するまで、Issueの作成を実行しない。
 
 </important>
 
