@@ -18,7 +18,6 @@ This file provides guidance to coding agents working with code in this repositor
 - `skills/planning-guardrails/SKILL.md` - Plan modeの計画作成で必須セクションを漏らさないためのガードレールを提供するスキル（自動発動）
 - `skills/reading-notion/SKILL.md` - NotionページやドキュメントをキーワードまたはURLで検索・取得し、内容を要約・説明するスキル（自動発動）
 - `skills/requesting-gcloud-bq-auth/SKILL.md` - gcloud/bqコマンドの認証エラーを検出してユーザーに認証を依頼するスキル（自動発動）
-- `skills/semantic-committing/SKILL.md` - git diffを分析し、変更を論理的単位に分割してコミットするスキル（自動発動）
 - `skills/updating-pr-title-and-description/SKILL.md` - PRタイトル・説明文の自動生成・更新スキル（自動発動）
 - `skills/writing-dev-diary/SKILL.md` - esa-llm-scoped-guardで開発日誌を新規作成・更新するスキル（自動発動）
 
@@ -52,10 +51,7 @@ npx skills add syou6162/agent-skills
 - [スキル](https://docs.claude.com/en/docs/claude-code/skills)
 ### XMLタグ構造化の実験（パイロット）
 
-**実験対象**:
-- `skills/semantic-committing/SKILL.md` - スキル
-
-Claudeのシステムプロンプトおよび公式ドキュメントでは、XMLタグによるプロンプト構造化が推奨されています。このリポジトリでは、上記ファイルでXMLタグ化を試験的に導入しています。
+Claudeのシステムプロンプトおよび公式ドキュメントでは、XMLタグによるプロンプト構造化が推奨されています。このリポジトリでは、複数のスキルでXMLタグ化を利用しています。
 
 **標準XMLタグ語彙**:
 ```markdown
