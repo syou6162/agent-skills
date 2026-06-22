@@ -1,6 +1,6 @@
 ---
 name: orchestrating-cursor-cloud-agent
-description: Cursor Cloud Agentにタスクを委託するよう依頼された際に発動。エージェント作成、SSEストリーム監視（stream）、実行キャンセル（cancel）、ステータスポーリング（フォールバック）、Pull Request状態確認、Linear紐付け、レビュー・フォローアップを行う。オーケストレーターはDevinに限らず、Codex・Claude Code等のエージェントを想定。
+description: Cursor Cloud Agentにタスクを委託するよう依頼された際に発動。エージェント作成、SSEストリーム監視（stream）、実行キャンセル（cancel）、ステータスポーリング（フォールバック）、Pull Request状態確認、Linear紐付け、レビュー・フォローアップを行う。
 compatibility: Requires cursor-agent-cli, CURSOR_CLOUD_AGENT_API_KEY environment variable, gh CLI, and Linear MCP server (https://mcp.linear.app/mcp)
 ---
 
