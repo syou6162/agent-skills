@@ -6,7 +6,7 @@ compatibility: Requires cursor-agent-cli, CURSOR_CLOUD_AGENT_API_KEY environment
 
 # Cursor Cloud Agent オーケストレーション
 
-オーケストレーター（Devin・Codex・Claude Code等のエージェント）がCursor Cloud Agentにタスクを委託し、監視・レビュー・フォローアップを行います。コーディング作業はCursorに任せ、オーケストレーターは判断・監視・指示に特化します。
+あなた自身がオーケストレーターとしてCursor Cloud Agentにタスクを委託し、監視・レビュー・フォローアップを行います。コーディング作業はCursorに任せ、あなたは判断・監視・指示に特化します。
 
 ## 使用タイミング
 
