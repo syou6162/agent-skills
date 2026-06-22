@@ -93,7 +93,7 @@ cursor-agent-cli status <agent_id> <run_id> --watch
 以下の場合に、実行中のrunをキャンセルします。
 
 - Cursorが応答しなくなった場合
-- Cursorの作業が間違った方向に進んでいる場合
+- オーケストレーターであるあなたが、Cursorの作業が間違った方向に進んでいると判断した場合
 - 作業中のCursorに追加で指示を出したい場合
 
 ```bash
