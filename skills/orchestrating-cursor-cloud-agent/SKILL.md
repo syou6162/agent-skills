@@ -104,7 +104,7 @@ cursor-agent-cli cancel <agent_id> <run_id>
 
 - キャンセルは不可逆。会話を続ける場合は `cursor-agent-cli run` で新しいrunを作成する。
 - 既に終了した実行のキャンセルは `409` エラーになる。
-- **RUNNING中に追加指示を送ることはできない**（`cursor-agent-cli run` は `409 agent_busy` になる）。追加指示や方向修正が必要な場合は、まず `cancel` してから `run` で新しい指示を送ること。
+- **RUNNING中に追加指示を送ることはできない**（`cursor-agent-cli run <agent_id> -prompt "..."` は `409 agent_busy` になる）。追加指示や方向修正が必要な場合は、まず `cancel` してから `run` で新しい指示を送ること。
 
 </important>
 
@@ -190,7 +190,7 @@ cursor-agent-cli run <agent_id> -prompt "<修正指示>"
 
 <important>
 
-- 前の実行が `RUNNING` 中に送ると `409 agent_busy`。完了済み（`FINISHED` / `CANCELLED` 等）でないと新しいrunは作成できない。
+- 前の実行が `RUNNING` 中に `cursor-agent-cli run` を実行すると `409 agent_busy` になる。完了済み（`FINISHED` / `CANCELLED` 等）でないと新しいrunは作成できない。
 - **作業中に方向修正・追加指示が必要な場合**: `cancel` → `run` の順で実行する。
   ```bash
   # 1. 現在の実行をキャンセル
