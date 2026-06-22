@@ -126,7 +126,7 @@ gh pr view <pr-url> --json state,isDraft,mergeStateStatus,statusCheckRollup
 
 </important>
 
-### 4b. Pull Requestレビュー（差分確認）
+### 5. Pull Requestレビュー（差分確認）
 
 Pull Requestのコードレビューを行う前に、差分の基準ブランチを最新化します。手元のローカル `main` が古いと、リモートには既にマージ済みの変更が差分に含まれ、余計な指摘や見落としの原因になります。
 
@@ -169,7 +169,7 @@ git diff origin/<デフォルトブランチ名>...pr-<PR番号>
 
 </important>
 
-### 5. Linear 紐付け
+### 6. Linear 紐付け
 
 Cursor が Pull Request を作成したら、関連する Linear issue に Pull Request を紐付けます。
 
@@ -179,7 +179,7 @@ Cursor が Pull Request を作成したら、関連する Linear issue に Pull 
 
 既存のリンクを上書きしないよう、追記する形で更新してください。
 
-### 6. 追加プロンプト（修正指示）
+### 7. 追加プロンプト（修正指示）
 
 Pull Request確認やレビューで修正が必要な場合、追加プロンプトを投入します。
 
@@ -194,7 +194,7 @@ cursor-agent-cli run <agent_id> -prompt "<修正指示>"
 
 </important>
 
-### 7. マージ完了後の Linear ステータス更新
+### 8. マージ完了後の Linear ステータス更新
 
 Pull Request が**実際にマージされた後**にのみ、Linear issue のステータスを Done に変更します。
 
