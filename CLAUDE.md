@@ -14,6 +14,7 @@ This file provides guidance to coding agents working with code in this repositor
 - `skills/execute-plan/SKILL.md` - planモードの計画に基づいて実装を開始するスキル（ユーザー明示呼び出し）。planファイル読み取り→タスクリスト作成→タスク順次実行→コミット→codex-reviewを自動化
 - `skills/gha-sha-reference/SKILL.md` - GitHub ActionsのタグをSHA参照に変換するスキル（自動発動）
 - `skills/breaking-down-linear-issues/SKILL.md` - Linearに大きなタスクを複数のIssueに分割して作成し、Issue間の依存関係を`blockedBy`で表現するスキル（自動発動）
+- `skills/requesting-cursor-delegation/SKILL.md` - Devin CLIから /handoff でDevin Cloudにタスクを引き継ぐ際、Devin Cloudに対してCursor Cloud Agentへの委譲を指示するスキル（自動発動）
 - `skills/orchestrating-cursor-cloud-agent/SKILL.md` - Cursor Cloud Agentにタスクを委託し、SSEストリーム監視（`stream`）・キャンセル（`cancel`）・ポーリング（フォールバック）・レビュー・フォローアップを行うスキル（自動発動）
 - `skills/planning-guardrails/SKILL.md` - Plan modeの計画作成で必須セクションを漏らさないためのガードレールを提供するスキル（自動発動）
 - `skills/reading-notion/SKILL.md` - NotionページやドキュメントをキーワードまたはURLで検索・取得し、内容を要約・説明するスキル（自動発動）
