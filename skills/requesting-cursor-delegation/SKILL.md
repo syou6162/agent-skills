@@ -1,5 +1,5 @@
 ---
-name: handing-off-to-cursor
+name: requesting-cursor-delegation
 description: Devin CLIから /handoff でDevin Cloudにタスクを引き継ぐ際に発動。ハンドオフ先のDevin Cloudに対して、タスクの実行をCursor Cloud Agentに委譲するよう指示を含める。
 compatibility: Requires Devin CLI with /handoff command
 ---
