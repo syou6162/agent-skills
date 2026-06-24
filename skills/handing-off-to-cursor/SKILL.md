@@ -17,11 +17,11 @@ compatibility: Requires Devin CLI with /handoff command
 ## 委譲の流れ（二段階）
 
 1. **Devin CLI → Devin Cloud**: `/handoff` でタスク・コンテキストを引き継ぐ（通常のhandoff）
-2. **Devin Cloud → Cursor Cloud Agent**: Devin Cloud が `orchestrating-cursor-cloud-agent` ナレッジに従い、コーディング作業を Cursor に委託する
+2. **Devin Cloud → Cursor Cloud Agent**: Devin Cloud がコーディング作業を Cursor に委託する
 
 ## やること
 
 通常の `/handoff` に加えて、ハンドオフ先の Devin Cloud に対して以下を伝えること：
 
 - タスクの実装は自分（Devin Cloud）で行わず、Cursor Cloud Agent に委譲すること
-- 委譲の手順は `orchestrating-cursor-cloud-agent` ナレッジに従うこと
+- 委譲の手順は Devin Cloud 側のナレッジに従うこと
