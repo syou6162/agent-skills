@@ -49,7 +49,7 @@ agent-skills/
 │   │   ├── SKILL.md                         # スキル定義
 │   │   └── references/
 │   │       ├── investigation-log-template.md # 調査ログテンプレート
-│   │       └── investigation-log-example.md  # 公開ソースだけを使った記入例
+│   │       └── investigation-log-example.md  # 調査ログ記入例
 │   └── writing-dev-diary/
 │       └── SKILL.md                         # スキル定義
 └── README.md

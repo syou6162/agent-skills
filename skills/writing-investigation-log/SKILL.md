@@ -107,4 +107,4 @@ description: 調査、裏取り、検証、コードリーディング、外部U
 
 新規ログは `references/investigation-log-template.md` を参照して作成します。
 
-記入粒度に迷う場合は `references/investigation-log-example.md` を参照します。この例は公開GitHubリポジトリとBigQuery public datasetだけを使い、esa、Notion、社内URLの例は含めません。
+記入粒度に迷う場合は `references/investigation-log-example.md` を参照します。
