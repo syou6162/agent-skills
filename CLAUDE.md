@@ -20,6 +20,7 @@ This file provides guidance to coding agents working with code in this repositor
 - `skills/reading-notion/SKILL.md` - NotionページやドキュメントをキーワードまたはURLで検索・取得し、内容を要約・説明するスキル（自動発動）
 - `skills/requesting-gcloud-bq-auth/SKILL.md` - gcloud/bqコマンドの認証エラーを検出してユーザーに認証を依頼するスキル（自動発動）
 - `skills/updating-pr-title-and-description/SKILL.md` - PRタイトル・説明文の自動生成・更新スキル（自動発動）
+- `skills/writing-investigation-log/SKILL.md` - 調査・裏取り・検証時に`.agent_work/investigations/`へ根拠付き内部調査ログを残すスキル（自動発動）
 - `skills/writing-dev-diary/SKILL.md` - esa-llm-scoped-guardで開発日誌を新規作成・更新するスキル（自動発動）
 
 ## 開発コマンド
